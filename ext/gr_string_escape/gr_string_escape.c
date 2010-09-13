@@ -1124,7 +1124,7 @@ static VALUE t_set_absolute_url(VALUE self, VALUE r_string) {
 
 VALUE cTest;
 
-void Init_string_escape() {
+void Init_gr_string_escape() {
   cTest = rb_define_class("GrStringEscape", rb_cObject);
   rb_define_method(cTest, "parse", t_parse, 3);
   rb_define_method(cTest, "set_absolute_url", t_set_absolute_url, 1);
