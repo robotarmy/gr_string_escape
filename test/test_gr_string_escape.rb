@@ -1,7 +1,8 @@
 require 'helper'
 
 class TestGrStringEscape < Test::Unit::TestCase
-  def test_something_for_real
-    flunk "hey buddy, you should probably rename this file and start testing for real"
+  def test_gr_string_escape_default
+    str = "[hi:philip]"
+    assert_equal str,GrStringEscape.new.parse('[hi:philip]',str.size,"")
   end
 end
