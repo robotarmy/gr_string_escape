@@ -24,6 +24,9 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "ext/gr_string_escape/extconf.rb",
+     "ext/gr_string_escape/gr_string_escape.c",
+     "gr_string_escape.gemspec",
      "lib/gr_string_escape.rb",
      "test/helper.rb",
      "test/test_gr_string_escape.rb"
