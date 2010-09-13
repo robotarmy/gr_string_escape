@@ -1,21 +1,28 @@
 require 'rubygems'
 require 'rake'
-
+jeweler_tasks = nil
 begin
   require 'jeweler'
-  Jeweler::Tasks.new do |gem|
+  jeweler_tasks = Jeweler::Tasks.new do |gem|
     gem.name = "gr_string_escape"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Goodreads string parser}
+    gem.description = %Q{Code for Goodreads String Parsing}
     gem.email = "github.com@robotarmyma.de"
     gem.homepage = "http://github.com/robotarmy/gr_string_escape"
-    gem.authors = ["Curtis Schofield"]
+    gem.authors = ["Michael Economy","Curtis Schofield"]
+    gem.extensions = FileList['ext/**/extconf.rb']
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
+
+require 'rake/extensiontask'
+
+Rake::ExtensionTask.new('gr_string_escape', jeweler_tasks.gemspec)
+CLEAN.include 'lib/**/*.so'
+
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
