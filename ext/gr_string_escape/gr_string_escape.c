@@ -23,6 +23,7 @@ char **tag_stack;
 int tag_stack_size;
 int anchors_in_stack;
 int cap_count;
+int writing_utf_8;  //set to the size of the utf_8 char remaining
 int counting_cap;
 
 char* input;
@@ -85,8 +86,30 @@ inline void write_char(char char_to_write) {
     printf("Error: max_output_size is being exceeded\n");
     return;
   }
+  
   output[output_size++] = char_to_write;
-  if(counting_cap) {
+  if (writing_utf_8) {
+    if(char_to_write & 0x80 && !(char_to_write & 0x40)) {
+      writing_utf_8 --;
+    }
+    else {
+      writing_utf_8 = 0;
+    }
+  }
+  else {
+    if(char_to_write & 0x80) {
+      if (char_to_write & 0x40) {
+        writing_utf_8 ++;
+        if (char_to_write & 0x20) {
+          writing_utf_8 ++;
+          if (char_to_write & 0x10) {
+            writing_utf_8 ++;
+          }
+        }
+      }
+    }
+  }
+  if(counting_cap && !writing_utf_8) {
     cap_count++;
   }
 }
@@ -429,7 +452,7 @@ static int html_parse(int start, int finish) {
   }
   
   //clean tag!
-  downcase(name);
+  downcasen(name, name_size);
   if(strcmp(name, "b") == 0){
     name = STRONG;
   }
@@ -562,8 +585,14 @@ static int gr_tag_parse() {
   }
   name = ALLOCA_N(char, name_size + 1);
   strncpy(name, tag, name_size);
-  downcase(name);
   name[name_size] = 0;
+  downcasen(name, name_size);
+  
+  if(position + name_size + 1 > input_size) {
+    printf("Error: position + name_size + 1 > input_size\n");
+    return;
+  }
+  
   tag += name_size + 1;
   tag_size -= name_size + 1;
   while(tag_size > 0) {
@@ -824,7 +853,7 @@ static int url_read() {
   
   url_downcase = ALLOCA_N(char, url_size + 1);
   strncpy(url_downcase, url, url_size);
-  downcase(url_downcase);
+  downcasen(url_downcase, url_size);
   
   
   if (strncmp(url_downcase, "http://", 7) == 0) {
@@ -994,6 +1023,7 @@ static VALUE t_parse(VALUE self, VALUE r_string, VALUE r_cap, VALUE r_cap_string
   anchors_in_stack = 0;
   counting_cap = TRUE;
   cap_count = 0;
+  writing_utf_8 = 0;
   position = ahead_position = 0;
   
   //de-ruby all the inputs!
