@@ -15,11 +15,13 @@ begin
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
+  puts "Jeweler missing : \n  gem install jeweler"
 end
-
-require 'rake/extensiontask'
-
+begin
+  require 'rake/extensiontask'
+rescue LoadError  
+  puts "rake-compiler missing : \n gem install rake-compiler"
+end
 Rake::ExtensionTask.new('gr_string_escape', jeweler_tasks.gemspec)
 CLEAN.include 'lib/**/*.so'
 
