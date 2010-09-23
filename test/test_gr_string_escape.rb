@@ -27,15 +27,15 @@ class TestGrStringEscape < Test::Unit::TestCase
   def test_unicode
     input = "日本語"
     result = escape_text(input, 1)
-    assert_size result, 3
+    assert_size 3, result
     
     input = "ひらがな"
     result = escape_text(input)
-    assert_size result, input.size
+    assert_size input.size, result
     
     
     result = escape_text(input, 2)
-    assert_size result, 6
+    assert_size 6,result
   end
   
   def test_escaping_javascript
