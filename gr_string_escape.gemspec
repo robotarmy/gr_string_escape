@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Economy", "Curtis Schofield"]
-  s.date = %q{2010-09-24}
+  s.date = %q{2010-10-22}
   s.description = %q{Code for Goodreads String Parsing}
   s.email = %q{github.com@robotarmyma.de}
   s.extensions = ["ext/gr_string_escape/extconf.rb"]
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "VERSION",
      "ext/gr_string_escape/extconf.rb",
      "ext/gr_string_escape/gr_string_escape.c",
+     "gr_string_escape.gemspec",
      "test/helper.rb",
      "test/new_assertions.rb",
      "test/test_gr_string_escape.rb"
@@ -33,7 +34,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/robotarmy/gr_string_escape}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{Goodreads string parser}
   s.test_files = [
     "test/helper.rb",
@@ -45,7 +46,7 @@ Gem::Specification.new do |s|
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
     else
     end
   else
